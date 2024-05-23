@@ -4,6 +4,7 @@
 Instalação das dependências do projeto:
 
 ```shell
+#!/bin/bash
 sudo apt-get update
 sudo apt install libboost-all-dev
 ```
