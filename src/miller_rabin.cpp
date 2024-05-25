@@ -1,6 +1,8 @@
 #include <ctime>
 #include <iostream>
+
 #include "miller_rabin.h"
+#include "powmod.h"
 
 bool single_test(mpz_int a, mpz_int N) {
     mpz_int exp = N - 1;
@@ -8,11 +10,11 @@ bool single_test(mpz_int a, mpz_int N) {
     while(!(exp & 1)) 
         exp = exp >> 1;
 
-    if (powm(a, exp, N) == 1) 
+    if (powmod_gmp(a, exp, N) == 1) 
         return true;
 
     while(exp < (N-1)) {
-        if(powm(a, exp, N) == (N-1)) 
+        if(powmod_gmp(a, exp, N) == (N-1)) 
             return true;
     
         exp = exp << 1;

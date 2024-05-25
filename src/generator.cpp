@@ -1,4 +1,5 @@
 #include "generator.h"
+#include "powmod.h"
 
 mpz_int exponentiation(mpz_int a, mpz_int b) {
     mpz_int res = a;
@@ -16,7 +17,7 @@ mpz_int find_generator(mpz_int p) {
         mpz_int a = 2;
         mpz_int test_exp = ((p-1) / p_antecessor_factors.primes[i]);
 
-        while(powm(a, test_exp, p) == 1) 
+        while(powmod_gmp(a, test_exp, p) == 1) 
             a++;
         
         mpz_int a_exp = ((p-1) / (exponentiation(p_antecessor_factors.primes[i], p_antecessor_factors.exponents[i])));
@@ -40,7 +41,7 @@ void test_generator(mpz_int g, mpz_int p) {
     all_num.push_back(g);
 
     for(mpz_int i=2; i<p; i++) 
-        all_num.push_back(powm(g, i, p));
+        all_num.push_back(powmod_gmp(g, i, p));
     
     sort(all_num.begin(), all_num.end());
 
