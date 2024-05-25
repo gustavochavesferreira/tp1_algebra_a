@@ -1,5 +1,5 @@
-#ifndef MILLER_RABIN
-#define MILLER_RABIN
+#ifndef MILLER_RABIN_H
+#define MILLER_RABIN_H
 
 #include <boost/random.hpp>
 #include <boost/multiprecision/gmp.hpp>
@@ -15,4 +15,3 @@ bool miller_rabin(mpz_int N, int k=40);
 mpz_int find_next_prime(mpz_int N);
 
 #endif
-
