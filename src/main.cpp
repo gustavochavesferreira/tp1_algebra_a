@@ -2,8 +2,9 @@
 
 int main() {
     mpz_int N; cin >> N;
+    mpz_int res = find_next_prime(N);
 
-    cout << "O menor primo maior do que " << N << " é " << find_next_prime(N) << endl;
+    cout << "O menor primo maior do que " << N << " é " << res << endl;
 
     return 0;
 }
