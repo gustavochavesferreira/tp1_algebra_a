@@ -1,6 +1,6 @@
 #include <ctime>
 #include <iostream>
-#include "../include/miller_rabin.h"
+#include "miller_rabin.h"
 
 bool single_test(mpz_int a, mpz_int N) {
     mpz_int exp = N - 1;
@@ -37,8 +37,6 @@ bool miller_rabin(mpz_int N, int k) {
 }
 
 mpz_int find_next_prime(mpz_int N) {
-    int count = 0;
-    
     if(N % 2 == 0) {
         N++;
         if(miller_rabin(N))
@@ -47,9 +45,7 @@ mpz_int find_next_prime(mpz_int N) {
 
     do {
         N+=2;
-        count++;
     } while(!miller_rabin(N));
 
-    cout << "O teste de Miller-Rabin foi usado " << count << " vezes" << endl;
     return N;
 }
