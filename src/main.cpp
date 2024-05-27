@@ -3,6 +3,7 @@
 #include "generator.h"
 #include "prime_generator.h"
 #include "crt.h"
+#include "bsgs.h"
 
 int main() {
 
