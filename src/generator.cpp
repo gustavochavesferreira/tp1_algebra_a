@@ -1,10 +1,13 @@
 #include "generator.h"
 
 mpz_int exponentiation(mpz_int a, mpz_int b) {
-    mpz_int res = a;
-    for(mpz_int i=1; i<b; i++) 
-        res *= a;
-
+    mpz_int res = 1;
+    while (b > 0) {
+        if (b & 1)
+            res = res * a;
+        a = a * a;
+        b >>= 1;
+    }
     return res;
 }
 
@@ -16,12 +19,13 @@ mpz_int find_generator(mpz_int p) {
         mpz_int a = 2;
         mpz_int test_exp = ((p-1) / p_antecessor_factors.primes[i]);
 
-        while(powm(a, test_exp, p) == 1) 
+        while(powm(a, test_exp, p) == 1) {
             a++;
+        }
         
         mpz_int a_exp = ((p-1) / (exponentiation(p_antecessor_factors.primes[i], p_antecessor_factors.exponents[i])));
 
-        mpz_int bi = exponentiation(a, a_exp);
+        mpz_int bi = powm(a, a_exp, p);
 
         generator_factors.push_back(bi);
     }

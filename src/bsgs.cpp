@@ -1,4 +1,5 @@
 #include "bsgs.h"
+#include "generator.h"
 
 mpz_int baby_stp_giant_step(mpz_int a, mpz_int b, mpz_int m) {
     a = a % m;
@@ -6,9 +7,7 @@ mpz_int baby_stp_giant_step(mpz_int a, mpz_int b, mpz_int m) {
 
     mpz_int n = sqrt(m) + 1;
 
-    mpz_int an = 1;
-    for (mpz_int i = 0; i < n; ++i)
-        an = (an * a) % m;
+    mpz_int an = powm(a, n, m);
 
     unordered_map<mpz_int, mpz_int> vals;
     for (mpz_int q = 0, cur = b; q <= n; ++q) {
