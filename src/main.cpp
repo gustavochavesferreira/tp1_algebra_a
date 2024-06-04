@@ -8,24 +8,32 @@
 #include "naive_discrete_log.h"
 
 int main() {
-    mpz_int N, a; 
-    cout << "Insira os números N e a, respectivamente: ";
-    cin >> N >> a;
-        
-    mpz_int next_prime = find_next_prime(N);
-    cout << "O menor primo maior do que " << N << " é " << next_prime << endl;
+    mpz_int N, a; cin >> N >> a;
+    mpz_int p = find_next_prime(N, 100);
+    cout << "O menor primo maior do que " << N << " é " << p << endl;
 
-    mpz_int generator = find_generator(next_prime);
-    cout << "Um gerador de Z(" << next_prime << ") é " << generator << endl;
+    mpz_int min_order;
+    bool high_order_element;
+    mpz_int g = find_generator(p, high_order_element, min_order);
+    if(high_order_element) {
+        cout << "Não foi possível computar um gerador!" << endl;
+        cout << "Um elemento de ordem alta é " << g << endl;
+        cout << "A ordem mínima é " << min_order << endl;
+        return 0;
+    }
+    cout << "Um gerador de Z(" << p << ") é " << g << endl;
 
-    mpz_int naive_discrete_log_bsgs = naive_discrete_log(generator, a, next_prime);
-    cout << "Utilizando força bruta, o Logaritmo Discreto de (" << a << " mod " << next_prime << ") na base " << generator << " é " << naive_discrete_log_bsgs << endl;
+    bool pohlig_hellman_time_limit_exceeded;
+    pohlig_hellman(g, a, p, pohlig_hellman_time_limit_exceeded, true);
+    if(pohlig_hellman_time_limit_exceeded) cout << "Não foi possível calcular o Logaritmo Discreto com Pohlig-Hellman" << endl;
+    
+    bool bsgs_time_limit_exceeded;
+    baby_step_giant_step(g, a, p, bsgs_time_limit_exceeded, true);
+    if(bsgs_time_limit_exceeded) cout << "Não foi possível calcular o Logaritmo Discreto com Baby-Step-Giant-Step" << endl;
 
-    mpz_int bsgs_discrete_log = baby_stp_giant_step(generator, a, next_prime);
-    cout << "Utilizando Baby-Step-Giant-Step, o Logaritmo Discreto de (" << a << " mod " << next_prime << ") na base " << generator << " é " << bsgs_discrete_log << endl;
-
-    mpz_int ph_discrete_log = pohlig_hellman(generator, a, next_prime);
-    cout << "Utilizando Pohlig-Hellman, o Logaritmo Discreto de (" << a << " mod " << next_prime << ") na base " << generator << " é " << ph_discrete_log << endl;
+    bool naive_discrete_log_time_limit_exceeded;
+    naive_discrete_log(g, a, p, naive_discrete_log_time_limit_exceeded, true);
+    if(naive_discrete_log_time_limit_exceeded) cout << "Não foi possível calcular o Logaritmo Discreto com força bruta" << endl;
     
     return 0;
 }

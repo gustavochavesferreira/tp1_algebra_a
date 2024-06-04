@@ -12,6 +12,8 @@ bool single_test(mpz_int a, mpz_int N);
 
 bool miller_rabin(mpz_int N, int k=40);
 
-mpz_int find_next_prime(mpz_int N);
+bool is_composite_with_small_factors(mpz_int X, list<int> n_first_primes);
+
+mpz_int find_next_prime(mpz_int N, int number_of_primes);
 
 #endif

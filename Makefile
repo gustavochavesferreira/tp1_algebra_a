@@ -1,11 +1,11 @@
 CC = g++
-LIBS = -lm -lgmp
+LIBS = -lm -lgmp -lboost_timer
 SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/factorization.o $(OBJ)/prime_generator.o $(OBJ)/miller_rabin.o $(OBJ)/generator.o $(OBJ)/crt.o $(OBJ)/bsgs.o $(OBJ)/pohlig_hellman.o $(OBJ)/naive_discrete_log.o $(OBJ)/main.o 
-HDRS = $(INC)/factorization.h $(INC)/prime_generator.h $(INC)/miller_rabin.h $(INC)/generator.h $(INC)/crt.h $(INC)/bsgs.h $(INC)/pohlig_hellman.h $(INC)/naive_discrete_log.h
+OBJS = $(OBJ)/factorization.o $(OBJ)/prime_generator.o $(OBJ)/timer_info.o  $(OBJ)/miller_rabin.o $(OBJ)/generator.o $(OBJ)/crt.o $(OBJ)/bsgs.o $(OBJ)/pohlig_hellman.o $(OBJ)/naive_discrete_log.o $(OBJ)/main.o 
+HDRS = $(INC)/factorization.h $(INC)/prime_generator.h $(INC)/timer_info.h $(INC)/miller_rabin.h $(INC)/generator.h $(INC)/crt.h $(INC)/bsgs.h $(INC)/pohlig_hellman.h $(INC)/naive_discrete_log.h
 CFLAGS = -Wall -c -I$(INC) 
 
 EXE = $(BIN)/tp1.exe
@@ -21,6 +21,9 @@ $(OBJ)/factorization.o: $(HDRS) $(SRC)/factorization.cpp
 
 $(OBJ)/prime_generator.o: $(HDRS) $(SRC)/prime_generator.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/prime_generator.o $(SRC)/prime_generator.cpp
+
+$(OBJ)/timer_info.o: $(HDRS) $(SRC)/timer_info.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/timer_info.o $(SRC)/timer_info.cpp
 
 $(OBJ)/crt.o: $(HDRS) $(SRC)/crt.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/crt.o $(SRC)/crt.cpp

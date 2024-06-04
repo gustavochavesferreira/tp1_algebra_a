@@ -1,6 +1,6 @@
 #include "prime_generator.h"
 
-void generatePrimes(std::list<int>* primes, long unsigned int n){
+void generate_primes(std::list<int>* primes, long unsigned int n) {
     int i = 2;
     while(primes->size()<n ){
         bool isPrime = true;

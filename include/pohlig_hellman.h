@@ -9,6 +9,6 @@ using namespace boost::multiprecision;
 
 mpz_int number_base_pi(mpz_int pi, vector<mpz_int> base_pi_digits);
 
-mpz_int pohlig_hellman(mpz_int a, mpz_int b, mpz_int m);
+mpz_int pohlig_hellman(mpz_int g, mpz_int y, mpz_int p, bool &pohlig_hellman_time_limit_exceeded, bool print_info);
 
 #endif

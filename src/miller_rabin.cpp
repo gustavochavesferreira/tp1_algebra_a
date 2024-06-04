@@ -1,6 +1,8 @@
 #include <ctime>
 #include <iostream>
+#include "generator.h"
 #include "miller_rabin.h"
+#include "prime_generator.h"
 
 bool single_test(mpz_int a, mpz_int N) {
     mpz_int exp = N - 1;
@@ -8,11 +10,11 @@ bool single_test(mpz_int a, mpz_int N) {
     while(!(exp & 1)) 
         exp = exp >> 1;
 
-    if (powm(a, exp, N) == 1) 
+    if (modular_exponentiation(a, exp, N) == 1) 
         return true;
 
     while(exp < (N-1)) {
-        if(powm(a, exp, N) == (N-1)) 
+        if(modular_exponentiation(a, exp, N) == (N-1)) 
             return true;
     
         exp = exp << 1;
@@ -36,16 +38,28 @@ bool miller_rabin(mpz_int N, int k) {
     return true;
 }
 
-mpz_int find_next_prime(mpz_int N) {
+bool is_composite_with_small_factors(mpz_int X, list<int> n_first_primes) {
+    for(auto prime : n_first_primes) 
+        if(X % prime == 0 && X != prime)
+            return true;
+    
+    return false;
+}
+
+mpz_int find_next_prime(mpz_int N, int number_of_primes) {
+    list<int> n_first_primes;
+    generate_primes(&n_first_primes, number_of_primes);
+
     if(N % 2 == 0) {
         N++;
-        if(miller_rabin(N))
-            return N;
+        if(!(is_composite_with_small_factors(N, n_first_primes)))
+            if(miller_rabin(N))
+                return N;
     }
 
     do {
         N+=2;
-    } while(!miller_rabin(N));
+    } while(is_composite_with_small_factors(N, n_first_primes) || !miller_rabin(N));
 
     return N;
 }
