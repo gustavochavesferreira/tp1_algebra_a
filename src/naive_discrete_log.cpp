@@ -4,18 +4,18 @@
 
 #define ONE_MINUTE 60 * 1000000000LL
 
-// g^x = a mod p
-mpz_int naive_discrete_log(const mpz_int& g, const mpz_int& a, const mpz_int& p, bool &naive_discrete_log_time_limit_exceeded, bool print_info) {
-    naive_discrete_log_time_limit_exceeded = false;
+mpz_int naive_discrete_log(const mpz_int g, const mpz_int a, const mpz_int p, bool print_info) {
+    // Medida de tempo
     nanosecond_type const time_limit(ONE_MINUTE);
     cpu_timer timer;
 
     for (mpz_int exponent = 1; exponent < p; ++exponent) {
+        // Medida de tempo
         cpu_times const elapsed_times(timer.elapsed());
         nanosecond_type const elapsed(elapsed_times.system + elapsed_times.user);
-
         if(elapsed >= time_limit) {
-            naive_discrete_log_time_limit_exceeded = true;
+            if(print_info) 
+                cout << "Não foi possível calcular o Logaritmo Discreto com força bruta" << endl;
             return -1;
         }
 

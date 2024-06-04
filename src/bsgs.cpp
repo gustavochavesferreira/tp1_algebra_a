@@ -4,9 +4,8 @@
 
 #define ONE_MINUTE 60 * 1000000000LL
 
-// g^x = a mod p
-mpz_int baby_step_giant_step(mpz_int g, mpz_int a, mpz_int p, bool &bsgs_time_limit_exceeded, bool print_info) {
-    bsgs_time_limit_exceeded = false;
+mpz_int baby_step_giant_step(mpz_int g, mpz_int a, mpz_int p, bool print_info) {
+    // Medida de tempo
     nanosecond_type const time_limit(ONE_MINUTE);
     cpu_timer timer;
 
@@ -18,11 +17,12 @@ mpz_int baby_step_giant_step(mpz_int g, mpz_int a, mpz_int p, bool &bsgs_time_li
 
     unordered_map<mpz_int, mpz_int> congruences_list;
     for (mpz_int q = 0, congruence = a; q <= n; ++q) {
+        // Medida de tempo
         cpu_times const elapsed_times(timer.elapsed());
         nanosecond_type const elapsed(elapsed_times.system + elapsed_times.user);
-
         if(elapsed >= time_limit) {
-            bsgs_time_limit_exceeded = true;
+            if(print_info) 
+                cout << "Não foi possível calcular o Logaritmo Discreto com Baby-Step-Giant-Step" << endl;            
             return -1;
         }
 
@@ -31,11 +31,12 @@ mpz_int baby_step_giant_step(mpz_int g, mpz_int a, mpz_int p, bool &bsgs_time_li
     }
 
     for (mpz_int q = 1, congruence; q <= n; ++q) {
+        // Medida de tempo
         cpu_times const elapsed_times(timer.elapsed());
         nanosecond_type const elapsed(elapsed_times.system + elapsed_times.user);
-
         if(elapsed >= time_limit) {
-            bsgs_time_limit_exceeded = true;
+            if(print_info) 
+                cout << "Não foi possível calcular o Logaritmo Discreto com Baby-Step-Giant-Step" << endl;    
             return -1;
         }
 

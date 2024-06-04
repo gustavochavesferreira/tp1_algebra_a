@@ -6,12 +6,13 @@
 Factors default_composite_factorization(mpz_int n, bool &factorization_time_limit_exceeded) {
     factorization_time_limit_exceeded = false;
     
+    // Medida de tempo
     cpu_timer timer;
     nanosecond_type const time_limit(ONE_MINUTE);
 
     Factors factors_n;
     for (mpz_int d = 2; d * d <= n; d++) {
-
+        // Medida de tempo
         cpu_times const elapsed_times(timer.elapsed());
         nanosecond_type const elapsed(elapsed_times.system + elapsed_times.user);
         

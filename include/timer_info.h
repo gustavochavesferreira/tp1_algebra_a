@@ -8,6 +8,7 @@ using namespace std;
 using namespace boost::multiprecision;
 using namespace boost::timer;
 
+// Imprime o tempo armazendado em um temporizador em segundos e milissegundos
 void print_timer_info(nanosecond_type elapsed);
 
 #endif

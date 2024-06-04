@@ -8,6 +8,8 @@ using namespace std;
 using namespace boost::multiprecision;
 using namespace boost::timer;
 
-mpz_int naive_discrete_log(const mpz_int& g, const mpz_int& a, const mpz_int& p, bool &naive_discrete_log_time_limit_exceeded, bool print_info);
+// Calcula o logaritmo discreto de (a mod p) na base g utilizando força bruta
+// Imprime informações relativas ao tempo de execução caso o parâmetro print_info seja true
+mpz_int naive_discrete_log(const mpz_int g, const mpz_int a, const mpz_int p, bool print_info);
 
 #endif

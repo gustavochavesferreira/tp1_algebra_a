@@ -7,6 +7,8 @@
 using namespace std;
 using namespace boost::multiprecision;
 
-mpz_int baby_step_giant_step(mpz_int g, mpz_int a, mpz_int p, bool &bsgs_time_limit_exceeded, bool print_info);
+// Calcula o logaritmo discreto de (a mod p) na base g utilizando o algoritmo "Baby-Step-Giant-Step"
+// Imprime informações relativas ao tempo de execução caso o parâmetro print_info seja true
+mpz_int baby_step_giant_step(mpz_int g, mpz_int a, mpz_int p, bool print_info);
 
 #endif

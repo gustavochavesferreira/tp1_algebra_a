@@ -4,6 +4,7 @@
 #include "timer_info.h"
 #include "factorization.h"
 #include "pohlig_hellman.h"
+#include "naive_discrete_log.h"
 
 #define ONE_MINUTE 60 * 1000000000LL
 
@@ -17,28 +18,20 @@ mpz_int number_base_pi(mpz_int pi, vector<mpz_int> base_pi_digits) {
     return final_number;
 }
 
-mpz_int pohlig_hellman(mpz_int g, mpz_int y, mpz_int p, bool &pohlig_hellman_time_limit_exceeded, bool print_info) {
-    pohlig_hellman_time_limit_exceeded = false;
-    
+mpz_int pohlig_hellman(mpz_int g, mpz_int y, mpz_int p, Factors p_antecessor_factors, bool print_info) {    
+    // Medida de tempo
     cpu_timer timer;
     nanosecond_type const time_limit(ONE_MINUTE);
-    
     vector<Congruence> crt_congruences;
-    bool factorization_time_limit_exceeded;
-    Factors phi_p = default_composite_factorization(p-1, factorization_time_limit_exceeded);
-
-    if(factorization_time_limit_exceeded) 
-        return -1;
-    
-    for(unsigned long int i=0; i<phi_p.primes.size(); i++) {
-        mpz_int current_prime = phi_p.primes[i];
-        mpz_int current_prime_exponent = phi_p.exponents[i];
+    for(unsigned long int i=0; i<p_antecessor_factors.primes.size(); i++) {
+        mpz_int current_prime = p_antecessor_factors.primes[i];
+        mpz_int current_prime_exponent = p_antecessor_factors.exponents[i];
         vector<mpz_int> base_pi_digits;
 
         mpz_int base_generator_exponent = ((p-1) / (current_prime));
         mpz_int base_generator = modular_exponentiation(g, base_generator_exponent, p);
 
-        for(unsigned long int j=0; j<phi_p.exponents[i]; j++) {
+        for(unsigned long int j=0; j<p_antecessor_factors.exponents[i]; j++) {
             mpz_int new_exponent_denominator = exponentiation(current_prime, j+1);
             mpz_int new_exponent = ((p-1) / (new_exponent_denominator));
 
@@ -49,11 +42,12 @@ mpz_int pohlig_hellman(mpz_int g, mpz_int y, mpz_int p, bool &pohlig_hellman_tim
             unsigned long int already_found_digits = j;
 
             for(unsigned long int k=0; k<already_found_digits; k++) {
+                // Medida de tempo
                 cpu_times const elapsed_times(timer.elapsed());
                 nanosecond_type const elapsed(elapsed_times.system + elapsed_times.user);
-
                 if(elapsed >= time_limit) {
-                    pohlig_hellman_time_limit_exceeded = true;
+                    if(print_info) 
+                        cout << "Não foi possível calcular o Logaritmo Discreto com Pohlig-Hellman" << endl;
                     return -1;
                 }
 
@@ -69,9 +63,8 @@ mpz_int pohlig_hellman(mpz_int g, mpz_int y, mpz_int p, bool &pohlig_hellman_tim
 
             mpz_int new_remainder = (new_y * m_inverse) % p;
 
-            bool bsgs_time_limit_exceeded;
-            mpz_int new_digit = baby_step_giant_step(base_generator, new_remainder, p, bsgs_time_limit_exceeded, false);
-            
+            mpz_int new_digit = naive_discrete_log(base_generator, new_remainder, p, false);
+
             base_pi_digits.push_back(new_digit);
         }
 
@@ -84,9 +77,9 @@ mpz_int pohlig_hellman(mpz_int g, mpz_int y, mpz_int p, bool &pohlig_hellman_tim
 
     mpz_int ans = crt(crt_congruences);
     
+    // Medida de tempo
     cpu_times const elapsed_times(timer.elapsed());
     nanosecond_type const elapsed(elapsed_times.system + elapsed_times.user);
-
     if(print_info) {
         cout << "Utilizando Pohlig-Hellman, o Logaritmo Discreto é " << ans;
         cout << " - O valor foi calculado em ";
@@ -94,4 +87,5 @@ mpz_int pohlig_hellman(mpz_int g, mpz_int y, mpz_int p, bool &pohlig_hellman_tim
     }
 
     return ans;
+
 }   

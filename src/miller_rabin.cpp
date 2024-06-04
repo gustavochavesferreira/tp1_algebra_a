@@ -50,16 +50,22 @@ mpz_int find_next_prime(mpz_int N, int number_of_primes) {
     list<int> n_first_primes;
     generate_primes(&n_first_primes, number_of_primes);
 
+    mpz_int original_N = N; 
+
     if(N % 2 == 0) {
         N++;
         if(!(is_composite_with_small_factors(N, n_first_primes)))
-            if(miller_rabin(N))
+            if(miller_rabin(N)) {
+                cout << "O menor primo maior do que " << original_N << " é " << N << endl;                
                 return N;
+            }
     }
 
     do {
         N+=2;
     } while(is_composite_with_small_factors(N, n_first_primes) || !miller_rabin(N));
 
+    cout << "O menor primo maior do que " << original_N << " é " << N << endl;    
+                
     return N;
 }
