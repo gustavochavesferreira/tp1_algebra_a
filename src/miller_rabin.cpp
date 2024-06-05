@@ -80,7 +80,7 @@ mpz_int find_next_prime(mpz_int N, int number_of_primes) {
     }
 
     cout << "O menor primo maior do que " << original_N << " é " << N << endl;    
-    cout << "O Teste de Miller-Rabin foi utilizado " << num_miller_rabin_test_uses << " veze(s)!" << endl << endl;
+    cout << "O Teste de Miller-Rabin foi utilizado " << num_miller_rabin_test_uses << " vez(es)!" << endl << endl;
 
     return N;
 }

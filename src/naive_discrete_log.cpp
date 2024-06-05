@@ -9,13 +9,13 @@ mpz_int naive_discrete_log(const mpz_int g, const mpz_int a, const mpz_int p, bo
     nanosecond_type const time_limit(ONE_MINUTE);
     cpu_timer timer;
 
-    for (mpz_int exponent = 1; exponent < p; ++exponent) {
+    for (mpz_int exponent = 1; exponent <= p; ++exponent) {
         // Medida de tempo
         cpu_times const elapsed_times(timer.elapsed());
         nanosecond_type const elapsed(elapsed_times.system + elapsed_times.user);
         if(elapsed >= time_limit) {
             if(print_info) 
-                cout << "Não foi possível calcular o Logaritmo Discreto com força bruta" << endl << endl;
+                cout << "Não foi possível calcular o Logaritmo Discreto com força bruta - o tempo limite de 1 minuto foi excedido!" << endl << endl;
             return -1;
         }
 
@@ -25,7 +25,7 @@ mpz_int naive_discrete_log(const mpz_int g, const mpz_int a, const mpz_int p, bo
                 cout << "Utilizando força bruta, o Logaritmo Discreto é " << exponent << endl;
                 cout << "O valor foi calculado em ";
                 print_timer_info(elapsed);
-                cout << endl;
+                cout << "!" << endl << endl;
             }
             return exponent;
         }
