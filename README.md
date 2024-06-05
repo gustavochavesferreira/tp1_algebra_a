@@ -1,6 +1,6 @@
 # Instruções de uso
 
-## Dependencias:
+## Dependências:
 Instalação das dependências do projeto:
 
 ```shell
