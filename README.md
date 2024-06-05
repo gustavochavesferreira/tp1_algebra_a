@@ -10,7 +10,7 @@ sudo apt install libboost-all-dev
 ```
 
 ## Execução:
-Estando na pasta raiz do projeto, basta executar o comando abaixo para que o programa seja compilado e executado:
+Estando na pasta raiz do projeto, basta executar os dois comandos abaixo para que o programa seja compilado e executado:
 
 ```shell
 make clean 
