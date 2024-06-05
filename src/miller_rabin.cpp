@@ -52,20 +52,35 @@ mpz_int find_next_prime(mpz_int N, int number_of_primes) {
 
     mpz_int original_N = N; 
 
+    int num_miller_rabin_test_uses = 0;
     if(N % 2 == 0) {
         N++;
-        if(!(is_composite_with_small_factors(N, n_first_primes)))
+
+        if(!(is_composite_with_small_factors(N, n_first_primes))) {
+            num_miller_rabin_test_uses++;
             if(miller_rabin(N)) {
-                cout << "O menor primo maior do que " << original_N << " é " << N << endl;                
+                cout << "O menor primo maior do que " << original_N << " é " << N << endl;
+                cout << "O Teste de Miller-Rabin foi utilizado " << num_miller_rabin_test_uses << " vez!" << endl << endl;
                 return N;
             }
+        }
     }
 
-    do {
+    while(true) {
         N+=2;
-    } while(is_composite_with_small_factors(N, n_first_primes) || !miller_rabin(N));
+
+        if(is_composite_with_small_factors(N, n_first_primes)) 
+            continue;
+
+        num_miller_rabin_test_uses++;
+
+        if(miller_rabin(N)) 
+            break;
+    
+    }
 
     cout << "O menor primo maior do que " << original_N << " é " << N << endl;    
-                
+    cout << "O Teste de Miller-Rabin foi utilizado " << num_miller_rabin_test_uses << " veze(s)!" << endl << endl;
+
     return N;
 }

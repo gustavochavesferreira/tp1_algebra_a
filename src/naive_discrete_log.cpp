@@ -15,16 +15,17 @@ mpz_int naive_discrete_log(const mpz_int g, const mpz_int a, const mpz_int p, bo
         nanosecond_type const elapsed(elapsed_times.system + elapsed_times.user);
         if(elapsed >= time_limit) {
             if(print_info) 
-                cout << "Não foi possível calcular o Logaritmo Discreto com força bruta" << endl;
+                cout << "Não foi possível calcular o Logaritmo Discreto com força bruta" << endl << endl;
             return -1;
         }
 
         mpz_int current_value = modular_exponentiation(g, exponent, p);
         if (current_value == a) {
             if(print_info) {
-                cout << "Utilizando força bruta, o Logaritmo Discreto é " << exponent;
-                cout << " - O valor foi calculado em ";
+                cout << "Utilizando força bruta, o Logaritmo Discreto é " << exponent << endl;
+                cout << "O valor foi calculado em ";
                 print_timer_info(elapsed);
+                cout << endl;
             }
             return exponent;
         }

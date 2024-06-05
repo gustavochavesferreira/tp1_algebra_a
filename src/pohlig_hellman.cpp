@@ -47,7 +47,7 @@ mpz_int pohlig_hellman(mpz_int g, mpz_int y, mpz_int p, Factors p_antecessor_fac
                 nanosecond_type const elapsed(elapsed_times.system + elapsed_times.user);
                 if(elapsed >= time_limit) {
                     if(print_info) 
-                        cout << "Não foi possível calcular o Logaritmo Discreto com Pohlig-Hellman" << endl;
+                        cout << "Não foi possível calcular o Logaritmo Discreto com Pohlig-Hellman" << endl << endl;
                     return -1;
                 }
 
@@ -81,9 +81,10 @@ mpz_int pohlig_hellman(mpz_int g, mpz_int y, mpz_int p, Factors p_antecessor_fac
     cpu_times const elapsed_times(timer.elapsed());
     nanosecond_type const elapsed(elapsed_times.system + elapsed_times.user);
     if(print_info) {
-        cout << "Utilizando Pohlig-Hellman, o Logaritmo Discreto é " << ans;
-        cout << " - O valor foi calculado em ";
+        cout << "Utilizando Pohlig-Hellman, o Logaritmo Discreto é " << ans << endl;
+        cout << "O valor foi calculado em ";
         print_timer_info(elapsed);
+        cout << endl;
     }
 
     return ans;

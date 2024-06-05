@@ -65,12 +65,12 @@ mpz_int find_generator(mpz_int p, bool &high_order_element, Factors &p_antecesso
 
         cout << "Não foi possível computar um gerador!" << endl;
         cout << "Um elemento de ordem alta é " << generator << endl;
-        cout << "A ordem mínima é " << min_order << endl;
+        cout << "A ordem mínima é " << min_order << endl << endl;
 
         return generator;
     }
 
-    cout << "Um gerador de Z(" << p << ") é " << generator << endl;
+    cout << "Um gerador de Z(" << p << ") é " << generator << endl << endl;
 
     return generator;
 }

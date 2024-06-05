@@ -22,7 +22,7 @@ mpz_int baby_step_giant_step(mpz_int g, mpz_int a, mpz_int p, bool print_info) {
         nanosecond_type const elapsed(elapsed_times.system + elapsed_times.user);
         if(elapsed >= time_limit) {
             if(print_info) 
-                cout << "Não foi possível calcular o Logaritmo Discreto com Baby-Step-Giant-Step" << endl;            
+                cout << "Não foi possível calcular o Logaritmo Discreto com Baby-Step-Giant-Step" << endl << endl;            
             return -1;
         }
 
@@ -36,7 +36,7 @@ mpz_int baby_step_giant_step(mpz_int g, mpz_int a, mpz_int p, bool print_info) {
         nanosecond_type const elapsed(elapsed_times.system + elapsed_times.user);
         if(elapsed >= time_limit) {
             if(print_info) 
-                cout << "Não foi possível calcular o Logaritmo Discreto com Baby-Step-Giant-Step" << endl;    
+                cout << "Não foi possível calcular o Logaritmo Discreto com Baby-Step-Giant-Step" << endl << endl;    
             return -1;
         }
 
@@ -45,9 +45,10 @@ mpz_int baby_step_giant_step(mpz_int g, mpz_int a, mpz_int p, bool print_info) {
             mpz_int ans = n * q - congruences_list[congruence];
 
             if(print_info) {
-                cout << "Utilizando Baby-Step-Giant-Step, o Logaritmo Discreto é " << ans;
-                cout << " - O valor foi calculado em ";
+                cout << "Utilizando Baby-Step-Giant-Step, o Logaritmo Discreto é " << ans << endl;
+                cout << "O valor foi calculado em ";
                 print_timer_info(elapsed);
+                cout << endl;
             }
 
             return ans;
